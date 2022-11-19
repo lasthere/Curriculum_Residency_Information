@@ -1,0 +1,256 @@
+{% extends 'hod_template/base_template.html' %}
+
+{% block page_title %}
+    Manage Student No
+{% endblock page_title %}
+
+{% block main_content %}
+
+{% load static %}
+
+<section class="content">
+        <div class="container-fluid">
+            <div class="row">
+            <div class="col-lg-12">
+              <!-- small box -->
+              <div class="small-box bg-info">
+                <div class="inner">
+                  <p>Total Students</p>
+                  <h3>{{ all_student_count }}</h3>
+
+                  
+                </div>
+              </div>
+            </div>
+
+        </div>
+
+            <div class="container-fluid">
+                <div class="col-lg-3 col-6">
+                    <a class="btn btn-primary" href="{% url 'add_student' %}" role="button">+ Add Student</a>
+                    <a class="btn btn-primary" href="{% url 'profile_upload' %}" role="button">+ Upload Csv File</a>
+                    <br/>&nbsp;
+                </div>    
+            </div>
+            
+            
+            {% if messages %}
+                                <div class="form-group">
+                                <div class="col-12">
+                                    {% for message in messages %}
+                                    {% if message.tags == "error" %}
+                                        <div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin-top: 10px;">
+                                        {{ message }}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        </div>
+                                    {% elif message.tags == "success" %}
+                                        <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-top: 10px;">
+                                        {{ message }}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        </div>
+                                    {% endif %}
+                                    {% endfor %}
+                                </div>
+                                </div>
+                                {% endif %}
+
+
+            <div class="row">
+
+                <div class="col-md-12">
+                    <!-- general form elements -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Student Details</h3>
+
+                            <div class="card-tools">
+                            <div class="input-group input-group-sm" style="width: 150px;">
+                                <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+
+                                <div class="input-group-append">
+                                <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body table-responsive p-0">
+                            <table class="table table-hover text-nowrap">
+                            <thead>
+                                <tr>
+                                <th>No.</th>
+                                <th>SchoolID</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>MI</th> 
+                                <th>Yr Level</th>
+                                <th>Email</th>
+                                <th>Phone Number</th>
+                                <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for a in a %}
+                                <tr>
+                                <td>{{ a.No }}</td>
+                                <td>{{ a.STUDENTID }}</td>
+                                <td>{{ a.FIRSTNAME }}</td>
+                                <td>{{ a.LASTNAME }}</td>
+                                <td>{{ a.MI }}</td>
+                                <td>{{ a.YEARLEVEL }}</td>
+                                <td>{{ a.EMAIL }}</td>
+                                <td>{{ a.PHONENUMBER }}</td>
+                                <td>
+                                    <a href="{% url 'dlt_student'% student.id }" class="btn btn-danger">Delete</a>
+                                </td>
+                                </tr> 
+                                {% endfor %}
+                                
+                            </tbody>
+
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                        </div>
+                    <!-- /.card -->
+
+                </div>
+            </div>
+
+        </div><!-- /.container-fluid -->
+      </section>
+
+
+  {% endblock main_content %}
+
+  {% block custom_js %}
+    {% comment %} Checking if email and username already exists or not usin Ajax {% endcomment %}
+
+    <script>
+   $(document).ready(function(){
+      var donutChartCanvas = $('#pieChart').get(0).getContext('3d')
+      var pieData        = {
+        labels: [
+            'Students', 
+            'Staffs',
+        ],
+        datasets: [
+          {
+            data: [{{ all_student_count }}, {{ staff_count }}],
+            backgroundColor : ['#f56954', '#00a65a'],
+          }
+        ]
+      }
+
+      //-------------
+      //- PIE CHART -
+      //-------------
+      // Get context with jQuery - using jQuery's .get() method.
+      var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
+      var pieData        = pieData;
+      var pieOptions     = {
+        maintainAspectRatio : false,
+        responsive : true,
+      }
+      //Create pie or douhnut chart
+      // You can switch between pie and douhnut using the method below.
+      var pieChart = new Chart(pieChartCanvas, {
+        type: 'pie',
+        data: pieData,
+        options: pieOptions      
+      })
+
+
+      // Get context with jQuery - using jQuery's .get() method.
+      var course_name_list = {{ course_name_list|safe }}
+      var subject_count_list = {{ subject_count_list }}
+      var donutChartCanvas = $('#donutChart').get(0).getContext('2d')
+      var donutData        = {
+        labels: course_name_list,
+        datasets: [
+          {
+            data: subject_count_list,
+            backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
+          }
+        ]
+      }
+      var donutOptions     = {
+        maintainAspectRatio : false,
+        responsive : true,
+      }
+      //Create pie or douhnut chart
+      // You can switch between pie and douhnut using the method below.
+      var donutChart = new Chart(donutChartCanvas, {
+        type: 'doughnut',
+        data: donutData,
+        options: donutOptions      
+      })
+
+
+      // Total Students in Each Course
+      //var donutChartCanvas = $('#pieChart2').get(0).getContext('2d')
+      var student_count_list_in_course = {{ student_count_list_in_course }}
+      var pieData2 = {
+        labels: course_name_list,
+        datasets: [
+          {
+            data: student_count_list_in_course,
+            backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
+          }
+        ]
+      }
+
+      //-------------
+      //- PIE CHART -
+      //-------------
+      // Get context with jQuery - using jQuery's .get() method.
+      var pieChartCanvas2 = $('#pieChart2').get(0).getContext('2d')
+      var pieData2        = pieData2;
+      var pieOptions2     = {
+        maintainAspectRatio : false,
+        responsive : true,
+      }
+
+      var pieChart2 = new Chart(pieChartCanvas2, {
+        type: 'pie',
+        data: pieData2,
+        options: pieOptions2      
+      })
+
+      // Total Students in Each Subject
+      var student_count_list_in_subject = {{ student_count_list_in_subject }}
+      var subject_list = {{ subject_list|safe }}
+      var pieData3 = {
+        labels: subject_list,
+        datasets: [
+          {
+            data: student_count_list_in_subject,
+            backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
+          }
+        ]
+      }
+
+      //-------------
+      //- PIE CHART -
+      //-------------
+      // Get context with jQuery - using jQuery's .get() method.
+      var pieChartCanvas3 = $('#pieChart3').get(0).getContext('2d')
+      var pieData3        = pieData3;
+      var pieOptions3     = {
+        maintainAspectRatio : false,
+        responsive : true,
+      }
+
+      var pieChart3 = new Chart(pieChartCanvas3, {
+        type: 'pie',
+        data: pieData3,
+        options: pieOptions3      
+      })
+
+    </script>
+
+    {%endblock custom_js %}

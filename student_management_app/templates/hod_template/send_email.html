@@ -1,0 +1,148 @@
+{% extends 'hod_template/base_template.html' %}
+
+{% block page_title %}
+    Send Email
+{% endblock page_title %}
+
+{% block main_content %}
+
+{% load static %}
+
+    <title>Send Email</title>
+    <style>
+        html,
+        body {
+            height: 100%;
+            width: 100%;
+        }
+ 
+        #pre-loader {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: brightness(.8);
+            z-index: 999999999;
+        }
+ 
+        .lds-ring {
+            display: inline-block;
+            position: relative;
+            width: 80px;
+            height: 80px;
+        }
+ 
+        .lds-ring div {
+            box-sizing: border-box;
+            display: block;
+            position: absolute;
+            width: 64px;
+            height: 64px;
+            margin: 8px;
+            border: 8px solid #fff;
+            border-radius: 50%;
+            animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+            border-color: #fff transparent transparent transparent;
+        }
+ 
+        .lds-ring div:nth-child(1) {
+            animation-delay: -0.45s;
+        }
+ 
+        .lds-ring div:nth-child(2) {
+            animation-delay: -0.3s;
+        }
+ 
+        .lds-ring div:nth-child(3) {
+            animation-delay: -0.15s;
+        }
+ 
+        @keyframes lds-ring {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+    <script>
+        var loader = document.createElement('div')
+        loader.setAttribute('id', 'pre-loader')
+        loader.innerHTML = '<div class="lds-ring"><div></div><div></div><div></div><div></div></div>'
+ 
+        function start_loader() {
+            if (!!document.getElementById('pre-loader'))
+                document.getElementById('pre-loader').remove();
+            document.querySelector('body').appendChild(loader)
+        }
+ 
+        function end_loader() {
+            setTimeout(() => {
+                if (!!document.getElementById('pre-loader'))
+                    document.getElementById('pre-loader').remove();
+            }, 500)
+        }
+        window.addEventListener('load', function() {
+            end_loader()
+            document.getElementById('email-form').addEventListener('submit', function() {
+                start_loader()
+            })
+        })
+    </script>
+</head>
+ 
+<body class="bg-dark bg-gradient bg-opacity-50">
+    <script>
+        start_loader()
+    </script>
+    <section class="content pt-4">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-7 col-md-10 col-sm-12 col-xs-12">
+                    <div class="card card-default border rounded-0">
+                        <div class="card-body">
+                            <div class="container-fluid">
+                                {% if not mail_response %}
+                                <center>
+                                    <h2 class="text-center">Student Notice</h2>
+                                    <hr>
+                                </center>
+                                <form action="{% url 'contact_form' %}" method="POST" id="email-form">
+                                    {% csrf_token %}
+                                    <div class="row-fluid">
+                                        <div class="row">
+                                        <div class="col-md-12">
+                                            <label for="message" class="control-label">Message</label>
+                                            <textarea name="message" id="message" rows="10" class="form-control rounded-0" required >This is the status of your curriculum residency.</textarea>
+                                        </div>
+                                    </div>
+                                        
+                                    </div>
+                                    
+                                    <div class="w-100 d-flex mt-3 justify-content-end">
+                                        <div class="col-auto">
+                                            <button class="btn btn-primary rounded-0">Send</button>
+                                        </div>
+                                    </div>
+                                </form>
+                                {% else %}
+                                <h3 class="text-center text-success">Your message has been sent successfully.</h3>
+                                <center><a href="{% url 'contact_form' %}">Send Message Again</a></center>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock main_content %}
+{% block custom_js %}
+
+{% endblock custom_js%}

@@ -1,0 +1,134 @@
+{% extends 'student_template/base_template.html' %}
+
+{% block page_title %}
+    STUDENT CURRICULUM RESIDENCY INFORMATION
+{% endblock page_title %}
+
+{% block main_content %}
+
+{% load static %}
+  
+  <section class="content">
+    <div class="container-fluid">
+        <table class="table">
+            <tr bgcolor="#8FBC8F">
+              <td colspan="4" height="25"><div align="center"><font color=black><strong>-
+                  STUDENT CURRICULUM RESIDENCY INFORMATION-</strong></font></div></td>
+            </tr>
+
+
+            <tr>
+              <td width="1%" height="25">&nbsp;</td>
+              <td width="49%" valign="middle">Student ID: <strong>19-0144-753</strong></td>
+              <td width="49%" valign="middle">Year: <strong>4</strong></td>
+            </tr>
+
+
+             <tr>
+              <td width="1%" height="25">&nbsp;</td>
+              <td width="49%" valign="middle">Student name: <strong>{{ user.first_name }} {{ user.last_name }}</strong></td>
+              <td width="49%" valign="middle">Status: <strong>REGULAR</strong></td>
+            </tr>
+
+             <tr>
+              <td width="1%" height="25">&nbsp;</td>
+              <td width="49%" valign="middle">  GWA: <strong>0.0</strong></td>
+              <td width="49%" valign="middle">Total units taken: <strong>132.0</strong></td>
+            </tr>
+
+
+             <tr>
+              <td width="1%" height="25">&nbsp;</td>
+              <td width="49%" valign="middle">  Course/Major: <strong>Bachelor of Science Information and Technology </strong></td>
+              <td height="25">  Total units required for this course :<strong> 156.0</strong></td>
+            </tr>
+            <tr>
+              <td height="25">&nbsp;</td>
+              <td height="25">Curriculum Year :<strong> 2020 - 2021</strong></td>
+              <td height="25">&nbsp;</td>
+              <td height="25">&nbsp;</td>
+            </tr>
+           
+          <table width="100%" border="0" bgcolor="#FFFFFF">
+
+    
+    
+            <tbody>
+                <tr> 
+                  <td>&nbsp;</td>
+                  <td colspan="11"><div align="center"><strong>First Year </strong></div></td>
+                </tr>
+                
+                <tr> 
+                  <td width="1%">&nbsp;</td>
+                  <td colspan="11"><strong><u>First Semester</u></strong></td>
+                </tr>
+                
+                <tr> 
+                  <td rowspan="2">&nbsp;</td>
+                  <td rowspan="2" height="19"><div align="left"><font size="1"><strong>SUBJECT 
+                      CODE</strong></font></div></td>
+                  <td rowspan="2"><div align="left"><font size="1"><strong>SUBJECT TITLE </strong></font></div></td>
+
+                  <td colspan="2"><div align="center"><font size="1"><strong>HOURS</strong></font></div></td>
+
+                  <td colspan="2"><div align="center"><font size="1"><strong>UNITS</strong></font></div></td>
+
+                  <td rowspan="2"><div align="left"><font size="1"><strong>GRADES</strong></font></div></td>
+
+                  <td rowspan="2"><div align="left"><font size="1"><style margin-left: 10px;></style><strong>REMARKS</strong></font></div></td>
+
+
+                </tr>
+                <tr> 
+
+                  <td width="7%"><div align="center"><font size="1"><strong>LEC.</strong></font></div></td>
+                  <td width="7%"><div align="center"><font size="1"><strong>LAB.</strong></font></div></td>
+                  <td width="7%"><div align="center"><font size="1"><strong>LEC.</strong></font></div></td>
+                  <td width="7%"><div align="center"><font size="1"><strong>LAB.</strong></font></div></td>
+
+                </tr>
+                {% for a in a %}
+                <tr> 
+                    <td></td>
+                    <td width="5%" height="19">{{ a.subj_code }}</td>
+                    <td width="15%">{{ a.subject_name }}</td>
+
+                    <td width="3%" align="center">{{ a.subj_hr_lec }}</td>
+                    <td width="3%" align="center" >{{ a.subj_hr_lab }}</td>
+                    <td width="3%" align="center">{{ a.subj_units_lec }}</td>
+                    <td width="3%" align="center">{{ a.subj_units_lab }}</td>
+
+                    <td width="3%" align="left">1.0</td>
+                    <td width="3%" align="left" id="open-popup"> <button class="open-popup btn-light">Passed</button></td>
+
+                    <div class="popup">
+                      <div class="head" style="background-color:#8FBC8F;">
+                        <div class="icon">
+                            <br>
+                           <h1 style="font-size:25px; padding: 1px;">Prerequisite</h1>
+                        </div>
+                      </div>
+
+                  <div class="body">
+                    <p>{{ a.prerequisite }}</p>
+                    <button class="close-btn" style="background-color:red; color:white;">&times; Close</button>
+                {% endfor %}
+                   
+                    
+                  </div>
+              </div>
+            </tr>
+
+            
+         
+            </tbody></table>
+
+    </div>
+</section>
+
+{% endblock main_content %}
+
+{% block custom_js %}
+
+{% endblock custom_js %}

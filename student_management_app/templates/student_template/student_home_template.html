@@ -1,0 +1,23 @@
+{% extends 'student_template/base_template.html' %}
+
+{% block page_title %}
+{% endblock page_title %}
+
+{% block main_content %}
+
+{% load static %}
+
+<section class="content">
+    <div class="d-flex align-items-center justify-content-center p-3 mb-2 bg-lightblue text-black rounded">
+        <h1>Welcome {{ user.first_name }} {{ user.last_name }}! </h1>
+    </div>
+    <div class="bg-silver p-1 mb-1">
+      <h3 align="center">
+      Please check for any notification sent by admin. Remember to keep your account contact info (e.g. email) up-to-date as message from system are sent via email.</h3>&nbsp; &nbsp;
+      <h3 class="text-right">
+      Thank You have a great day!</h3>
+
+    </div>
+    
+</section>
+  {% endblock main_content %}

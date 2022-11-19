@@ -1,0 +1,97 @@
+{% load static %}
+{% block custom_css %}
+<style>
+  .navbar-toggler:focus {
+    outline: 0;
+  }
+  .navbar-nav > .active {
+    color: ghostwhite;!important;  **// THIS DOES NOT WORK**
+    background-color: darkblue!important; **//THIS WORKS**
+  }
+  .nav-item > a:hover {
+    color: ghostwhite;!important;
+    background-color: darkblue;
+  }
+}
+</style>
+{% endblock custom_css %}
+
+
+<aside class="main-sidebar sidebar-light-lime elevation-5" style="background-color: rgb(255, 255, 255);">
+      <!-- Brand Logo -->
+     <a href="{% url 'student_home' %}" class="brand-link">
+        <img src="{% static 'dist/img/PITlogo.jpg' %}" alt="PIT Logo" class="brand-image img-circle elevation-3"
+            style="opacity: .8">
+        <span class="brand-text font-weight-light">PIT</span>
+      </a>
+
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <!-- Sidebar user panel (optional) -->
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+          <div class="image">
+            <img src="{% static 'dist/img/user2-160x160.jpg' %}" class="img-circle elevation-2" alt="User Image">
+          </div>
+          <div class="info">
+            <a href="{% url 'student_profile' %}" class="d-block">{{ user.first_name }} {{ user.last_name }}</a>
+          </div>
+        </div>
+
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <!-- Add icons to the links using the .nav-icon class
+                with font-awesome or any other icon font library -->
+            
+            <li class="nav-item">
+              {% url 'student_home' as student_home %}
+              <a href="{{ student_home }}" class="nav-link {% if request.path == student_home %} active {% endif %}">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  Home
+                  {% comment %} <span class="right badge badge-danger">New</span> {% endcomment %}
+                </p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              {% url 'pages' as pages %}
+              <a href="{{ pages }}" class="nav-link {% if request.path == pages %} active {% endif %}">
+                <i class="nav-icon fas fa-tasks"></i>
+                <p>
+                  View Result
+                  {% comment %} <span class="right badge badge-danger">New</span> {% endcomment %}
+                </p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              {% url 'student_residency' as student_residency %}
+              <a href="{{ student_residency }}" class="nav-link {% if request.path == student_residency %} active {% endif %}">
+                <i class="nav-icon fas fa-tasks"></i>
+                <p>
+                  View Residency
+                  {% comment %} <span class="right badge badge-danger">New</span> {% endcomment %}
+                </p>
+              </a>
+            </li>
+
+          </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+      </div>
+      <!-- /.sidebar -->
+    </aside>
+<script>
+  $(document).ready(function() {
+    "use strict";
+
+    $('ul.navbar-nav > li').click(function(e) {
+      e.preventDefault();
+      $('ul.navbar-nav > li').removeClass('active');
+      $(this).addClass('active');
+    });
+  });
+
+</script>
+  
